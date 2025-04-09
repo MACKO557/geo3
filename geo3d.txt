@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz: Miasta Polski</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #map-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    #marker {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: red;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      display: none;
+    }
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+    .options li {
+      margin: 10px 0;
+    }
+    .options input {
+      margin-right: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz: Miasta Polski</h1>
+  <p>Kliknij na mapie, aby zaznaczyć miasto, a następnie wybierz jego nazwę z listy.</p>
+
+  <div id="map-container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Polska_mapa_blank.png" alt="Mapa Polski" id="map" width="600">
+    <div id="marker"></div>
+  </div>
+
+  <form id="quiz-form">
+    <ul class="options">
+      <li><label><input type="radio" name="city" value="Jastrzębie-Zdrój"> Jastrzębie-Zdrój</label></li>
+      <li><label><input type="radio" name="city" value="Ostrów Wielkopolski"> Ostrów Wielkopolski</label></li>
+      <li><label><input type="radio" name="city" value="Gdynia"> Gdynia</label></li>
+      <li><label><input type="radio" name="city" value="Gdańsk"> Gdańsk</label></li>
+      <li><label><input type="radio" name="city" value="Białystok"> Białystok</label></li>
+      <li><label><input type="radio" name="city" value="Olsztyn"> Olsztyn</label></li>
+      <li><label><input type="radio" name="city" value="Warszawa"> Warszawa</label></li>
+      <li><label><input type="radio" name="city" value="Lublin"> Lublin</label></li>
+      <li><label><input type="radio" name="city" value="Rzeszów"> Rzeszów</label></li>
+      <li><label><input type="radio" name="city" value="Kraków"> Kraków</label></li>
+      <li><label><input type="radio" name="city" value="Katowice"> Katowice</label></li>
+      <li><label><input type="radio" name="city" value="Łódź"> Łódź</label></li>
+      <li><label><input type="radio" name="city" value="Poznań"> Poznań</label></li>
+      <li><label><input type="radio" name="city" value="Wrocław"> Wrocław</label></li>
+      <li><label><input type="radio" name="city" value="Szczecin"> Szczecin</label></li>
+      <li><label><input type="radio" name="city" value="Zielona Góra"> Zielona Góra</label></li>
+      <li><label><input type="radio" name="city" value="Kielce"> Kielce</label></li>
+      <li><label><input type="radio" name="city" value="Opole"> Opole</label></li>
+      <li><label><input type="radio" name="city" value="Toruń"> Toruń</label></li>
+    </ul>
+    <button type="button" onclick="submitAnswer()">Zatwierdź</button>
+  </form>
+
+  <script>
+    const map = document.getElementById("map");
+    const marker = document.getElementById("marker");
+    let selectedCoords = null;
+
+    map.addEventListener("click", function(event) {
+      const rect = map.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      marker.style.left = x + "px";
+      marker.style.top = y + "px";
+      marker.style.display = "block";
+      selectedCoords = { x, y };
+    });
+
+    function submitAnswer() {
+      const selected = document.querySelector('input[name="city"]:checked');
+      if (!selected || !selectedCoords) {
+        alert("Proszę zaznaczyć punkt na mapie i wybrać nazwę miasta.");
+        return;
+      }
+      alert(`Wybrałeś: ${selected.value}. Sprawdź z nauczycielem, czy to poprawna odpowiedź.`);
+    }
+  </script>
+
+</body>
+</html>
